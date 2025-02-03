@@ -8,11 +8,11 @@ export default class Mounting extends React.Component {
     this.state = { likes: 0 };
   }
   
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log(props.name);
-  //   console.log("getting props and init states !!!");
-  //   return null;
-  // }
+  static getDerivedStateFromProps(props, state) {
+    console.log(props.name);
+    console.log("getting props and init states !!!");
+    return null;
+  }
   componentDidMount() {
     console.log("component did mount !!!");
   }
