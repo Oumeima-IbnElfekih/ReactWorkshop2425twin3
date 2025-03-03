@@ -2,11 +2,9 @@
 import React,{ Suspense, useState } from 'react';
 import './App.css'
 import Events from './UseCase/Events';
-// import ColorBox from './ExercicesProps&State/ColorBox';
 import { Routes , Route ,Link} from 'react-router-dom';
-// import Counter from './ExercicesProps&State/Counter';
-const ColorBox = React.lazy(()=>import('./ExercicesProps&State/ColorBox'));
-const Counter = React.lazy(()=>import('./ExercicesProps&State/Counter'));
+import NavigationBar from './UseCase/NavigationBar';
+
 function App() {
   
 
@@ -15,7 +13,7 @@ function App() {
      {/* <Events /> */}
      {/* <ColorBox initialColor="red"  /> */}
      {/* <a href='/test/colorbox/oumeima/twin'>Colobox with ancer</a> */}
-     <Link to='/test/colorbox/oumeima/twin' reloadDocument>Colobox with Link</Link>
+     {/* <Link to='/test/colorbox/oumeima/twin' reloadDocument>Colobox with Link</Link>
      <Suspense fallback={<p>Loading...</p>}>
      <Routes>
       <Route path="/test" > 
@@ -24,7 +22,19 @@ function App() {
       </Route>
       <Route path="*" element={<p>404 not found</p>} />
      </Routes>
-     </Suspense>
+     </Suspense> */}
+     <React.Suspense fallback={<h1> Loading ...</h1>}>
+      <NavigationBar />
+      <Routes>
+        <Route path="/events">
+          <Route index element={<Events />} />
+        </Route>
+        <Route
+          path="*"
+          element={<img src="/images/notfound.jfif" width="100%" />}
+        />
+      </Routes>
+    </React.Suspense>
     </>
   )
 }
