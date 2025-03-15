@@ -1,12 +1,31 @@
-import eventsJson from "../data/events.json";
+//import eventsJson from "../data/events.json";
 import React, { useEffect, useState } from "react";
 import Event from "./Event";
 import Row from "react-bootstrap/Row";
 import Alert from 'react-bootstrap/Alert';
+import { deleteEvent, getallEvents } from "../services/api";
 
 export default function Events() {
     const [showAlert, setShowAlert] = useState(false);
     const [welcomeAlert, setWelcomeAlert] = useState(true);
+    const [events , setEvents] =useState([])
+  //l'appel de la liste à partir du store 
+   
+    useEffect(()=>{
+
+      const fetchEvents = async ()=>{
+    
+
+        const listEvents = await getallEvents()
+  
+        setEvents(listEvents.data)
+        console.log(listEvents)
+  
+      };
+
+      fetchEvents();
+
+    },[])
     useEffect(() => {
 setTimeout(()=>{
 
@@ -24,6 +43,16 @@ setTimeout(()=>{
             setShowAlert(false);
         }, 2000)
      }
+
+
+         const deleteE  = async(id)=>{
+     
+           await deleteEvent(id)
+          
+           setEvents(()=>events.filter((event)=>event.id !== id))
+     
+           
+         }   
   return (
     <div>
          {welcomeAlert && <Alert  variant="info">
@@ -35,8 +64,8 @@ setTimeout(()=>{
         </Alert>
        }
      <Row >
-        {eventsJson.map((eventItem, index) => (
-          <Event key={index} event={eventItem}  fnt={showAlertBook}/>
+        {events?.map((eventItem, index) => (
+          <Event deleteE={deleteE}  key={eventItem.id} event={eventItem}  fnt={showAlertBook}/>
         ))}
       </Row>
     
