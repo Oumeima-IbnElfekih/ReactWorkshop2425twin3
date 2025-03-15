@@ -5,9 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { editEvent, getallEvents } from '../services/api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { eventSchema } from '../services/EventSchema';
+import useEventStore from '../ZustandStores/useEventStore';
 
 function UpdateEvent() {
-    
+    const { updateEventObject} = useEventStore();
     const {id}= useParams();
 
    const navigate = useNavigate()
@@ -58,7 +59,7 @@ function UpdateEvent() {
           like: eventItem.like,
         })
     
-        
+        updateEventObject(result.data)
         if (result.status == 200){
     
             navigate('/events')

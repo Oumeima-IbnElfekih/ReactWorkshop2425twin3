@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { addEvent } from '../services/api'
 import {eventSchema} from "../services/EventSchema"
 import { zodResolver } from '@hookform/resolvers/zod'
+import useEventStore from '../ZustandStores/useEventStore'
 
 function AddEvent() {
 
 
     const navigate = useNavigate()
-  
+    const {addEventObject}= useEventStore();
     const {register ,handleSubmit ,formState: { errors } } = useForm({
       resolver: zodResolver(eventSchema),
     });
@@ -34,7 +35,7 @@ function AddEvent() {
         like: false
       }
     const result  = await addEvent(object)
-  
+    addEventObject(result.data)
     if (result.status == 201){
 
         navigate('/events')
